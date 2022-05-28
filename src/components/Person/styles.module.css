@@ -29,14 +29,16 @@
 
 .dead {
     position: absolute;
-    top: -20px;
     right: 10px;
     height: 20px;
     width: 10px;
 }
 
-.person.female .dead {
+.person.female > .dead {
     top: -8px;
+}
+.person.male > .dead {
+    top: -20px;
 }
 
 .dead:before {
@@ -61,20 +63,25 @@
 
 .personWrapper {
     position: relative;
+    display: flex;
+}
+.personWrapper > .person + .personWrapper {
+    margin-left: 50px;
 }
 
 .childrens {
     position: absolute;
     bottom: -150px;
-    left: calc(-50%);
     display: flex;
     gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .add {
     opacity: 0.5;
 }
-.person .actions {
+.person > .actions {
     opacity: 0;
     transition: all 0.3s ease;
     position: absolute;
@@ -82,11 +89,45 @@
     right: 0;
 }
 
-.person.female .actions {
+.person.female > .actions {
     right: 10px;
     top: 10px;
 }
 
-.person:hover .actions {
+.person:hover > .actions {
     opacity: 1;
+}
+
+.childrens::before {
+    content: '';
+    width: calc(100% - 100px);
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: -25px;
+    left: 50px;
+}
+
+.childrens::after {
+    content: '';
+    width: 2px;
+    height: 25px;
+    background-color: black;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 1px);
+}
+
+.childrens > * {
+    position: relative;
+}
+
+.childrens > *::before {
+    content: '';
+    width: 2px;
+    height: 25px;
+    top: -25px;
+    left: calc(50% - 1px);
+    position: absolute;
+    background-color: black;
 }

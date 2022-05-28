@@ -1,0 +1,8 @@
+.relation {
+    background-color: black;
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 100px;
+    width: 50px;
+    height: 2px;
+}

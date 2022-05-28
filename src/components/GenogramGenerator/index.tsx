@@ -27,7 +27,11 @@ const GenogramGenerator = () => {
 
     const renderPersons = () => {
         return (
-            <Row justify="center" align="center" style={{ gap: 20 }}>
+            <Row
+                justify="center"
+                align="center"
+                style={{ gap: 20, marginTop: '4em' }}
+            >
                 {persons.map((person, index) => {
                     return (
                         <Person
@@ -38,7 +42,6 @@ const GenogramGenerator = () => {
                         />
                     )
                 })}
-                <AddPerson setPerson={addPerson} inBlock />
             </Row>
         )
     }

@@ -2,15 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { Props } from './types'
 import styles from './styles.module.css'
 import { Container, Popover, Row, Spacer, Text } from '@nextui-org/react'
-import { EditFilled, MoreOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+    EditFilled,
+    EditOutlined,
+    MoreOutlined,
+    PlusOutlined,
+    UserAddOutlined,
+    UsergroupAddOutlined,
+} from '@ant-design/icons'
 import AddPerson from 'components/AddPerson'
 import { IPerson } from 'types/Person'
+import Relation from 'components/Relation'
 
-const Person = ({ person, onOpen = () => null, index, setPerson }: Props) => {
+const Person = ({
+    person,
+    onOpen = () => null,
+    index,
+    setPerson,
+    customText,
+}: Props) => {
     const [personState, setPersonState] = useState<IPerson | null>(person)
+    const [partner, setPartner] = useState<IPerson | null>(null)
 
     const [isEditting, setIsEditting] = useState(false)
     const [isAddingChild, setIsAddingChild] = useState(false)
+    const [popOverVisible, setPopOverVisible] = useState(false)
+    const [isAddingPartner, setIsAddingPartner] = useState(false)
 
     useEffect(() => {
         if (JSON.stringify(person) !== JSON.stringify(personState)) {
@@ -38,7 +55,7 @@ const Person = ({ person, onOpen = () => null, index, setPerson }: Props) => {
                         onClick={onOpen}
                     >
                         <PlusOutlined />
-                        <Text size={12}>Add new person</Text>
+                        <Text size={12}>{customText || 'Add new person'}</Text>
                     </div>
                 </>
             </div>
@@ -66,6 +83,10 @@ const Person = ({ person, onOpen = () => null, index, setPerson }: Props) => {
         })
     }
 
+    const updatePartner = (partner: IPerson) => {
+        setPartner(partner)
+    }
+
     return (
         <div className={styles.personWrapper}>
             <>
@@ -77,64 +98,105 @@ const Person = ({ person, onOpen = () => null, index, setPerson }: Props) => {
                     <Text size={12}>{age}</Text>
                     {dead && <div className={styles.dead}></div>}
                     <div className={styles.actions}>
-                        <Popover placement="top-left">
+                        <Popover
+                            placement="top-left"
+                            isOpen={popOverVisible}
+                            shouldCloseOnInteractOutside={() => true}
+                            onClose={() => setPopOverVisible(false)}
+                        >
                             <Popover.Trigger>
-                                <MoreOutlined />
+                                <MoreOutlined
+                                    onClick={() => setPopOverVisible(true)}
+                                />
                             </Popover.Trigger>
                             <Popover.Content>
                                 <Container style={{ padding: '0.5em 1em' }}>
                                     <Row
                                         align="center"
                                         style={{ cursor: 'pointer' }}
-                                        onClick={() => setIsEditting(true)}
+                                        onClick={() => {
+                                            setIsEditting(true)
+                                            setPopOverVisible(false)
+                                        }}
                                     >
-                                        <EditFilled />
+                                        <EditOutlined />
                                         <Spacer x={0.3} />
                                         <Text>Edit</Text>
                                     </Row>
                                     <Row
                                         align="center"
                                         style={{ cursor: 'pointer' }}
-                                        onClick={() => setIsAddingChild(true)}
+                                        onClick={() => {
+                                            setIsAddingChild(true)
+                                            setPopOverVisible(false)
+                                        }}
                                     >
-                                        <EditFilled />
+                                        <UsergroupAddOutlined />
                                         <Spacer x={0.3} />
                                         <Text>Add Child</Text>
+                                    </Row>
+                                    <Row
+                                        align="center"
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => {
+                                            setIsAddingPartner(true)
+                                            setPopOverVisible(false)
+                                        }}
+                                    >
+                                        <UserAddOutlined />
+                                        <Spacer x={0.3} />
+                                        <Text>Add partner</Text>
                                     </Row>
                                 </Container>
                             </Popover.Content>
                         </Popover>
                     </div>
                     <AddPerson
+                        setPerson={setPartner}
                         withButton={false}
-                        open={isEditting}
-                        onClose={() => setIsEditting(false)}
-                        isEditting={personState}
-                        setPerson={editPerson}
+                        open={isAddingPartner}
+                        onClose={() => setIsAddingPartner(false)}
                     />
-                    <AddPerson
-                        withButton={false}
-                        open={isAddingChild}
-                        onClose={() => setIsAddingChild(false)}
-                        setPerson={addChild}
-                    />
-                    {childrens && childrens.length > 0 && (
-                        <div className={styles.childrens}>
-                            <>
-                                {childrens.map((child, index) => (
-                                    <Person
-                                        key={child.id}
-                                        person={child}
-                                        index={index}
-                                        setPerson={editChild}
-                                    />
-                                ))}
-                                <AddPerson setPerson={addChild} inBlock />
-                            </>
-                        </div>
-                    )}
                 </div>
+                {partner && (
+                    <>
+                        <Person
+                            person={partner}
+                            index={0}
+                            setPerson={updatePartner}
+                        />
+                        <Relation />
+                    </>
+                )}
+                {childrens && childrens.length > 0 && (
+                    <div className={styles.childrens}>
+                        <>
+                            {childrens.map((child, index) => (
+                                <Person
+                                    key={child.id}
+                                    person={child}
+                                    index={index}
+                                    setPerson={editChild}
+                                />
+                            ))}
+                            <AddPerson setPerson={addChild} inBlock />
+                        </>
+                    </div>
+                )}
             </>
+            <AddPerson
+                withButton={false}
+                open={isEditting}
+                onClose={() => setIsEditting(false)}
+                isEditting={personState}
+                setPerson={editPerson}
+            />
+            <AddPerson
+                withButton={false}
+                open={isAddingChild}
+                onClose={() => setIsAddingChild(false)}
+                setPerson={addChild}
+            />
         </div>
     )
 }

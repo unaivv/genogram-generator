@@ -19,11 +19,12 @@ const AddPerson = ({
     onClose = () => null,
     open = false,
     isEditting,
+    customText,
 }: IProps) => {
     const [visible, setVisible] = useState(open)
 
     const [name, setName] = useState(isEditting ? isEditting.name : '')
-    const [age, setAge] = useState(isEditting ? isEditting.age : 0)
+    const [age, setAge] = useState(isEditting ? isEditting.age : '')
     const [dead, setDead] = useState(isEditting ? isEditting.dead : false)
     const [gender, setGender] = useState<IGender>(
         isEditting ? isEditting.gender : 'male'
@@ -46,7 +47,7 @@ const AddPerson = ({
     const resetState = () => {
         if (!isEditting) {
             setName('')
-            setAge(0)
+            setAge('')
             setDead(false)
             setGender('male')
         }
@@ -75,6 +76,7 @@ const AddPerson = ({
                             onOpen={openHandler}
                             index={0}
                             setPerson={() => null}
+                            customText={customText}
                         />
                     ) : (
                         <Button onPress={openHandler}>
@@ -106,6 +108,11 @@ const AddPerson = ({
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         label="Name"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                createHandler()
+                            }
+                        }}
                     />
                     <Input
                         clearable
@@ -115,10 +122,14 @@ const AddPerson = ({
                         size="lg"
                         placeholder="Age"
                         required={true}
-                        type="number"
                         value={age}
-                        onChange={(e) => setAge(Number(e.target.value))}
+                        onChange={(e) => setAge(e.target.value)}
                         label="Age"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                createHandler()
+                            }
+                        }}
                     />
                     <Radio.Group
                         onChange={(value) => setGender(value as IGender)}

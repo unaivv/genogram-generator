@@ -5,4 +5,5 @@ export interface Props {
     onOpen?: () => void
     index: number
     setPerson: (person: IPerson, index: number) => void
+    customText?: string
 }
