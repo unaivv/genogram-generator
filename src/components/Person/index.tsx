@@ -118,8 +118,8 @@ const Person = ({ person, onOpen = () => null, index, setPerson }: Props) => {
                         onClose={() => setIsAddingChild(false)}
                         setPerson={addChild}
                     />
-                    <div className={styles.childrens}>
-                        {childrens && (
+                    {childrens && childrens.length > 0 && (
+                        <div className={styles.childrens}>
                             <>
                                 {childrens.map((child, index) => (
                                     <Person
@@ -131,8 +131,8 @@ const Person = ({ person, onOpen = () => null, index, setPerson }: Props) => {
                                 ))}
                                 <AddPerson setPerson={addChild} inBlock />
                             </>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             </>
         </div>
