@@ -7,6 +7,8 @@ import {
     EditOutlined,
     MoreOutlined,
     PlusOutlined,
+    StarFilled,
+    StarOutlined,
     UserAddOutlined,
     UsergroupAddOutlined,
 } from '@ant-design/icons'
@@ -23,6 +25,7 @@ const Person = ({
 }: Props) => {
     const [personState, setPersonState] = useState<IPerson | null>(person)
     const [partner, setPartner] = useState<IPerson | null>(null)
+    const [main, setMain] = useState<boolean>(false)
 
     const [isEditting, setIsEditting] = useState(false)
     const [isAddingChild, setIsAddingChild] = useState(false)
@@ -91,7 +94,9 @@ const Person = ({
         <div className={styles.personWrapper}>
             <>
                 <div
-                    className={`${styles.person} ${styles[gender]}`}
+                    className={`${styles.person} ${styles[gender]} ${
+                        main ? styles.main : ''
+                    }`}
                     id={`person-${id}`}
                 >
                     <Text>{name}</Text>
@@ -147,6 +152,24 @@ const Person = ({
                                         <UserAddOutlined />
                                         <Spacer x={0.3} />
                                         <Text>Add partner</Text>
+                                    </Row>
+                                    <Row
+                                        align="center"
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => {
+                                            setMain(!main)
+                                            setPopOverVisible(false)
+                                        }}
+                                    >
+                                        {main ? (
+                                            <StarFilled />
+                                        ) : (
+                                            <StarOutlined />
+                                        )}
+                                        <Spacer x={0.3} />
+                                        <Text>
+                                            {main ? 'Unmark' : 'Mark'} as main
+                                        </Text>
                                     </Row>
                                 </Container>
                             </Popover.Content>

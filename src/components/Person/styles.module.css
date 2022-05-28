@@ -10,6 +10,19 @@
     text-align: center;
     padding: 0.5em 1em;
 }
+
+.person.main::before {
+    content: '';
+    position: absolute;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    background-color: transparent;
+    border: 2px solid black;
+    top: 5px;
+    left: 5px;
+    pointer-events: none;
+}
+
 .person > * {
     margin-bottom: 0.5em;
 }
@@ -36,6 +49,7 @@
 .person.female > .dead {
     top: -8px;
 }
+
 .person.male > .dead {
     top: -20px;
 }
@@ -80,12 +94,13 @@
 .add {
     opacity: 0.5;
 }
+
 .person > .actions {
     opacity: 0;
     transition: all 0.3s ease;
     position: absolute;
     top: 5px;
-    right: 0;
+    right: 5px;
 }
 
 .person.female > .actions {
