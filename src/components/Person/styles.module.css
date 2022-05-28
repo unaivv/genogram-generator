@@ -1,0 +1,53 @@
+.person {
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+.person > * {
+    margin-bottom: 0.5em;
+}
+
+.person > *:last-child {
+    margin-bottom: 0;
+}
+
+.person.male {
+    border-radius: 0;
+}
+
+.person.female {
+    border-radius: 50%;
+}
+
+.dead {
+    position: absolute;
+    top: -20px;
+    right: 10px;
+    height: 20px;
+    width: 10px;
+}
+
+.dead:before {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: 5px;
+    left: 0;
+}
+
+.dead::after {
+    content: '';
+    width: 2px;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 1px);
+}
