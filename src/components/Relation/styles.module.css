@@ -1,8 +1,56 @@
 .relation {
-    background-color: black;
     position: absolute;
-    top: calc(50% - 1px);
+    top: calc(50% - 10px);
     left: 100px;
     width: 50px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+}
+
+.relation .simpleBar {
+    background-color: black;
+    width: 100%;
     height: 2px;
+    z-index: 1;
+}
+
+.relation .dottedBar {
+    width: 100%;
+    height: 0;
+    border-top: 2px dotted black;
+    z-index: 1;
+}
+
+.relation .zigzagBar {
+    position: absolute;
+    height: 20px;
+    width: 100%;
+    background: linear-gradient(135deg, white 35%, transparent 25%) -25px 0,
+        linear-gradient(225deg, white 35%, transparent 25%) -25px 0,
+        linear-gradient(315deg, white 35%, transparent 25%),
+        linear-gradient(45deg, white 35%, transparent 25%);
+    background-size: 17px 20px;
+    background-color: black;
+}
+
+.relation .breakBar {
+    background-color: black;
+    width: 100%;
+    height: 2px;
+    z-index: 1;
+}
+
+.relation .breakBar::after {
+    content: '';
+    position: absolute;
+    background-color: white;
+    width: 50%;
+    left: 25%;
+    height: 100%;
+    top: 0;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
 }

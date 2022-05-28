@@ -107,6 +107,7 @@ const Person = ({
                             <Popover.Trigger>
                                 <MoreOutlined
                                     onClick={() => setPopOverVisible(true)}
+                                    style={{ cursor: 'pointer' }}
                                 />
                             </Popover.Trigger>
                             <Popover.Content>
@@ -169,19 +170,29 @@ const Person = ({
                     </>
                 )}
                 {childrens && childrens.length > 0 && (
-                    <div className={styles.childrens}>
-                        <>
-                            {childrens.map((child, index) => (
-                                <Person
-                                    key={child.id}
-                                    person={child}
-                                    index={index}
-                                    setPerson={editChild}
-                                />
-                            ))}
-                            <AddPerson setPerson={addChild} inBlock />
-                        </>
-                    </div>
+                    <>
+                        <div
+                            className={`${styles.childrens} ${
+                                !partner ? styles.unique : ''
+                            }`}
+                        >
+                            <div className={styles.childsBar}>
+                                <div className={styles.bar}></div>
+                                <div className={styles.bar}></div>
+                            </div>
+                            <>
+                                {childrens.map((child, index) => (
+                                    <Person
+                                        key={child.id}
+                                        person={child}
+                                        index={index}
+                                        setPerson={editChild}
+                                    />
+                                ))}
+                                <AddPerson setPerson={addChild} inBlock />
+                            </>
+                        </div>
+                    </>
                 )}
             </>
             <AddPerson

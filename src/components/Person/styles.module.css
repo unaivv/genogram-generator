@@ -7,7 +7,6 @@
     align-items: center;
     flex-direction: column;
     position: relative;
-    cursor: pointer;
     text-align: center;
     padding: 0.5em 1em;
 }
@@ -71,7 +70,7 @@
 
 .childrens {
     position: absolute;
-    bottom: -150px;
+    bottom: -175px;
     display: flex;
     gap: 20px;
     left: 50%;
@@ -130,4 +129,34 @@
     left: calc(50% - 1px);
     position: absolute;
     background-color: black;
+}
+
+.childsBar {
+    content: '';
+    width: calc(100% - 75px);
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: rotate(180deg) translateX(50%);
+    max-width: 145px;
+    min-width: 145px;
+}
+.childsBar .bar {
+    height: 27px;
+    background-color: black;
+    position: absolute;
+    width: 2px;
+}
+.childsBar .bar:first-child {
+    left: 0;
+}
+.childsBar .bar:last-child {
+    right: 0;
+}
+
+.childrens.unique .childsBar {
+    width: 2px;
+    min-width: 2px;
 }
