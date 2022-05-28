@@ -7,22 +7,36 @@ import {
     Switch,
     Radio,
 } from '@nextui-org/react'
-import { GenogramStateContext } from 'hooks/useFormContext'
-import React, { useContext, useState } from 'react'
+import Person from 'components/Person'
+import React, { useEffect, useState } from 'react'
 import { IGender } from 'types/Person'
+import { IProps } from './types'
 
-const AddPerson = () => {
-    const [visible, setVisible] = useState(false)
-    const { updateGenogramState, genogramState } =
-        useContext(GenogramStateContext)
+const AddPerson = ({
+    setPerson = () => null,
+    inBlock = false,
+    withButton = true,
+    onClose = () => null,
+    open = false,
+    isEditting,
+}: IProps) => {
+    const [visible, setVisible] = useState(open)
 
-    const [name, setName] = useState('')
-    const [age, setAge] = useState(0)
-    const [dead, setDead] = useState(false)
-    const [gender, setGender] = useState<IGender>('male')
+    const [name, setName] = useState(isEditting ? isEditting.name : '')
+    const [age, setAge] = useState(isEditting ? isEditting.age : 0)
+    const [dead, setDead] = useState(isEditting ? isEditting.dead : false)
+    const [gender, setGender] = useState<IGender>(
+        isEditting ? isEditting.gender : 'male'
+    )
+    const childrens = isEditting ? isEditting.childrens : []
+
+    useEffect(() => {
+        setVisible(open)
+    }, [open])
 
     const closeHandler = () => {
         setVisible(false)
+        onClose()
     }
 
     const openHandler = () => {
@@ -30,23 +44,22 @@ const AddPerson = () => {
     }
 
     const resetState = () => {
-        setName('')
-        setAge(0)
-        setDead(false)
-        setGender('male')
+        if (!isEditting) {
+            setName('')
+            setAge(0)
+            setDead(false)
+            setGender('male')
+        }
     }
 
     const createHandler = () => {
-        updateGenogramState({
-            persons: [
-                ...(genogramState?.persons || []),
-                {
-                    name,
-                    age,
-                    dead,
-                    gender,
-                },
-            ],
+        setPerson({
+            id: +new Date(),
+            name,
+            age,
+            dead,
+            gender,
+            childrens: childrens,
         })
         closeHandler()
         resetState()
@@ -54,7 +67,22 @@ const AddPerson = () => {
 
     return (
         <div>
-            <Button onPress={openHandler}>Add person</Button>
+            {withButton && (
+                <>
+                    {inBlock ? (
+                        <Person
+                            person={null}
+                            onOpen={openHandler}
+                            index={0}
+                            setPerson={() => null}
+                        />
+                    ) : (
+                        <Button onPress={openHandler}>
+                            {isEditting ? 'Edit' : 'Add'} person
+                        </Button>
+                    )}
+                </>
+            )}
             <Modal
                 closeButton
                 aria-labelledby="modal-title"
@@ -62,7 +90,9 @@ const AddPerson = () => {
                 onClose={closeHandler}
             >
                 <Modal.Header>
-                    <Text size={18}>Add new person</Text>
+                    <Text size={18}>
+                        {isEditting ? 'Edit' : 'Add new'} person
+                    </Text>
                 </Modal.Header>
                 <Modal.Body>
                     <Input
@@ -93,7 +123,7 @@ const AddPerson = () => {
                     <Radio.Group
                         onChange={(value) => setGender(value as IGender)}
                         row
-                        value="male"
+                        value={gender}
                     >
                         <Radio value="male">Male</Radio>
                         <Radio value="female">Female</Radio>
@@ -118,7 +148,7 @@ const AddPerson = () => {
                         Cancel
                     </Button>
                     <Button auto onPress={createHandler}>
-                        Add
+                        {isEditting ? 'Edit' : 'Add'}
                     </Button>
                 </Modal.Footer>
             </Modal>

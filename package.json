@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@ant-design/icons": "4.0.0",
         "@nextui-org/react": "^1.0.0-beta.7",
         "next": "12.1.6",
         "react": "18.1.0",

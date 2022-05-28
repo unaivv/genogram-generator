@@ -1,9 +1,7 @@
 import { Container } from '@nextui-org/react'
-import CreateGenogramForm from 'components/CreateGenogramForm'
 import GenogramGenerator from 'components/GenogramGenerator'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import GenogramContext from '../src/hooks/useFormContext'
 
 const Home: NextPage = () => {
     return (
@@ -20,10 +18,7 @@ const Home: NextPage = () => {
             </header>
             <main>
                 <Container>
-                    <GenogramContext.Provider>
-                        <CreateGenogramForm />
-                        <GenogramGenerator />
-                    </GenogramContext.Provider>
+                    <GenogramGenerator />
                 </Container>
             </main>
         </div>
