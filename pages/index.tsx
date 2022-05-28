@@ -1,9 +1,12 @@
-import { Container } from '@nextui-org/react'
+import { Button, Container, Row, Spacer, Text } from '@nextui-org/react'
 import GenogramGenerator from 'components/GenogramGenerator'
+import PreviewContext from 'hooks/usePreviewContext'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useState } from 'react'
 
 const Home: NextPage = () => {
+    const [start, setStart] = useState(false)
     return (
         <div>
             <Head>
@@ -18,7 +21,24 @@ const Home: NextPage = () => {
             </header>
             <main>
                 <Container>
-                    <GenogramGenerator />
+                    <h3>Welcome to the best online genogram generator!</h3>
+                    <Text>Remember to start at the highest level</Text>
+                    <Spacer />
+                    {!start ? (
+                        <Row
+                            style={{ height: '60vh' }}
+                            align="center"
+                            justify="center"
+                        >
+                            <Button size="xl" onPress={() => setStart(true)}>
+                                Start!
+                            </Button>
+                        </Row>
+                    ) : (
+                        <PreviewContext.Provider>
+                            <GenogramGenerator />
+                        </PreviewContext.Provider>
+                    )}
                 </Container>
             </main>
         </div>

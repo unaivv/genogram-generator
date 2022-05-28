@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Props } from './types'
 import styles from './styles.module.css'
 import { Container, Popover, Row, Spacer, Text } from '@nextui-org/react'
@@ -15,6 +15,7 @@ import {
 import AddPerson from 'components/AddPerson'
 import { IPerson } from 'types/Person'
 import Relation from 'components/Relation'
+import { PreviewContext } from 'hooks/usePreviewContext'
 
 const Person = ({
     person,
@@ -23,6 +24,8 @@ const Person = ({
     setPerson,
     customText,
 }: Props) => {
+    const { isPreview } = useContext(PreviewContext)
+
     const [personState, setPersonState] = useState<IPerson | null>(person)
     const [partner, setPartner] = useState<IPerson | null>(null)
     const [main, setMain] = useState<boolean>(false)
@@ -50,7 +53,7 @@ const Person = ({
     }, [personState])
 
     if (!personState)
-        return (
+        return !isPreview ? (
             <div className={`${styles.personWrapper} ${styles.add}`}>
                 <>
                     <div
@@ -62,7 +65,7 @@ const Person = ({
                     </div>
                 </>
             </div>
-        )
+        ) : null
 
     const { id, name, age, dead, gender, childrens } = personState
 
@@ -99,7 +102,7 @@ const Person = ({
                     }`}
                     id={`person-${id}`}
                 >
-                    <Text>{name}</Text>
+                    <Text style={{ lineHeight: '1em' }}>{name}</Text>
                     <Text size={12}>{age}</Text>
                     {dead && <div className={styles.dead}></div>}
                     <div className={styles.actions}>
@@ -212,7 +215,9 @@ const Person = ({
                                         setPerson={editChild}
                                     />
                                 ))}
-                                <AddPerson setPerson={addChild} inBlock />
+                                {!isPreview && (
+                                    <AddPerson setPerson={addChild} inBlock />
+                                )}
                             </>
                         </div>
                     </>

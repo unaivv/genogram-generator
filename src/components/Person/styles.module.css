@@ -23,6 +23,10 @@
     pointer-events: none;
 }
 
+.person.female.main::before {
+    border-radius: 50%;
+}
+
 .person > * {
     margin-bottom: 0.5em;
 }
