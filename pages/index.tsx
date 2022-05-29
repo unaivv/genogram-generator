@@ -1,3 +1,4 @@
+import { GithubOutlined, LinkedinOutlined } from '@ant-design/icons'
 import { Button, Container, Link, Row, Spacer, Text } from '@nextui-org/react'
 import GenogramGenerator from 'components/GenogramGenerator'
 import PreviewContext from 'hooks/usePreviewContext'
@@ -66,6 +67,22 @@ const Home: NextPage = () => {
                                 rel="noopener noreferrer"
                             >
                                 Unai Vidal Viso
+                            </Link>
+                        </Text>
+                        <Text size={20}>
+                            <Link
+                                href="https://github.com/unaivv/genogram-generator"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <GithubOutlined />
+                            </Link>{' '}
+                            <Link
+                                href="https://www.linkedin.com/in/unai-vidal-viso/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <LinkedinOutlined />
                             </Link>
                         </Text>
                         <Text>
