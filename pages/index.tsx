@@ -1,4 +1,4 @@
-import { Button, Container, Row, Spacer, Text } from '@nextui-org/react'
+import { Button, Container, Link, Row, Spacer, Text } from '@nextui-org/react'
 import GenogramGenerator from 'components/GenogramGenerator'
 import PreviewContext from 'hooks/usePreviewContext'
 import type { NextPage } from 'next'
@@ -41,6 +41,34 @@ const Home: NextPage = () => {
                     )}
                 </Container>
             </main>
+            <footer
+                style={{
+                    position: 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    padding: '1em',
+                    background: '#fafafa',
+                    borderTop: '1px solid #eaeaea',
+                }}
+            >
+                <Container>
+                    <Text>
+                        Made with{' '}
+                        <span role="img" aria-label="heart">
+                            ❤️
+                        </span>{' '}
+                        by{' '}
+                        <Link
+                            href="https://www.linkedin.com/in/unai-vidal-viso/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Unai Vidal Viso
+                        </Link>
+                    </Text>
+                </Container>
+            </footer>
         </div>
     )
 }
