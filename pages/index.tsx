@@ -53,20 +53,40 @@ const Home: NextPage = () => {
                 }}
             >
                 <Container>
-                    <Text>
-                        Made with{' '}
-                        <span role="img" aria-label="heart">
-                            ❤️
-                        </span>{' '}
-                        by{' '}
-                        <Link
-                            href="https://www.linkedin.com/in/unai-vidal-viso/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Unai Vidal Viso
-                        </Link>
-                    </Text>
+                    <Row justify={'space-between'}>
+                        <Text>
+                            Made with{' '}
+                            <span role="img" aria-label="heart">
+                                ❤️
+                            </span>{' '}
+                            by{' '}
+                            <Link
+                                href="https://www.linkedin.com/in/unai-vidal-viso/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Unai Vidal Viso
+                            </Link>
+                        </Text>
+                        <Text>
+                            Made with{' '}
+                            <Link
+                                href="https://nextjs.org/"
+                                target={'_blank'}
+                                rel={'noopener noreferrer'}
+                            >
+                                Next.js
+                            </Link>{' '}
+                            &{' '}
+                            <Link
+                                href="https://nextui.org/"
+                                target={'_blank'}
+                                rel={'noopener noreferrer'}
+                            >
+                                Next UI
+                            </Link>
+                        </Text>
+                    </Row>
                 </Container>
             </footer>
         </div>

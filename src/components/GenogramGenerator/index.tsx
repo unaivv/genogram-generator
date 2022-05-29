@@ -2,6 +2,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import { Row, Switch, Text } from '@nextui-org/react'
 import AddPerson from 'components/AddPerson'
 import Person from 'components/Person'
+import Save from 'components/Save'
 import { PreviewContext } from 'hooks/usePreviewContext'
 import React, { useContext } from 'react'
 import { IPerson } from 'types/Person'
@@ -35,6 +36,7 @@ const GenogramGenerator = () => {
                 justify="center"
                 align="center"
                 style={{ gap: 20, marginTop: '4em' }}
+                id="genogram"
             >
                 {persons.map((person, index) => {
                     return (
@@ -63,6 +65,7 @@ const GenogramGenerator = () => {
                     onChange={(e) => setIsPreview(e.target.checked)}
                 />
             </div>
+            <Save />
         </div>
     )
 }
